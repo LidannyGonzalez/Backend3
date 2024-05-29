@@ -1,1 +1,32 @@
-[{"id":"f7f6d286-722a-437f-a9bb-3f3dfaa6f094","status":true,"title":"lygm","description":"agenda floral","code":"2451","price":8000,"stock":20,"category":"agendas"}]
+[
+	{
+		"id": "36b2a196-3464-487a-8d15-2e70d73501f3",
+		"status": true,
+		"title": "Agenda Producto",
+		"description": "agenda diaria",
+		"category": "Agenda",
+		"code": "555555",
+		"price": 5000,
+		"stock": 20
+	},
+	{
+		"id": "ed7ba9e7-a915-4386-808b-2b96c3461b4b",
+		"status": true,
+		"title": "Planners Diario",
+		"description": "Planner diario",
+		"category": "Planner",
+		"code": "451278",
+		"price": 5000,
+		"stock": 50
+	},
+	{
+		"id": "9eddfae6-6269-4131-8f38-f6d1474312f8",
+		"status": true,
+		"title": "Agenda Personalizada",
+		"description": "Agenda con logo empresarial",
+		"category": "Agenda",
+		"code": "123654",
+		"price": 6000,
+		"stock": 50
+	}
+]
