@@ -1,7 +1,6 @@
+// routes/views.routes.js
 import { Router } from "express";
-import { __dirname } from "../path.js";
 import * as productService from "../services/product.services.js";
-
 
 const router = Router();
 
@@ -13,7 +12,7 @@ const generateLink = (url, page, limit, title, sort) => {
   return link;
 };
 
-router.get("/",  async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const { page = 1, limit = 10, title, sort } = req.query;
     const response = await productService.getAllProducts(page, limit, title, sort);
@@ -31,10 +30,9 @@ router.get("/",  async (req, res, next) => {
       prevLink
     });
   } catch (error) {
-    console.log("error al renderizar ❌");
-    next(error.message);
+    console.error("Error al renderizar ❌", error);
+    next(error);
   }
 });
 
-
-
+export default router; // Exporta el enrutador por defecto

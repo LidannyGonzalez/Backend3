@@ -1,20 +1,17 @@
-import { Schema, model } from "mongoose"; // Importación de Schema y model desde Mongoose
-import mongoosePaginate from "mongoose-paginate-v2"; // Plugin de paginación para Mongoose
+import { Schema, model } from "mongoose"; 
+import mongoosePaginate from "mongoose-paginate-v2";
 
-export const productcolection = "products"; // Nombre de la colección en la base de datos
+export const productcolection = "products";
 
-// Definición del esquema de producto
 const productSchema = new Schema({
-  title: { type: String, required: true }, // Título del producto (obligatorio)
-  description: { type: String, required: true }, // Descripción del producto (obligatoria)
-  code: { type: String, required: true, unique: true }, // Código único del producto (obligatorio y único)
-  price: { type: Number, required: true }, // Precio del producto (obligatorio)
-  stock: { type: Number, required: true }, // Stock disponible del producto (obligatorio)
-  category: { type: String, required: true, index: true }, // Categoría del producto (obligatoria, índice para búsqueda rápida)
-});
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+        code: { type: String, required: true, unique: true },
+        price: { type: Number, required: true },
+        stock: { type: Number, required: true },
+        category: { type: String, required: true, index: true },
+    });
 
-productSchema.plugin(mongoosePaginate); // Aplicación del plugin de paginación a productSchema
-
-// Creación del modelo 'ProductModel' basado en el esquema 'productSchema'
-export const ProductModel = model(productcolection, productSchema);
-
+    productSchema.plugin(mongoosePaginate);
+    
+    export const ProductModel = model(productcolection, productSchema);

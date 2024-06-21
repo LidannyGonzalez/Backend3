@@ -1,5 +1,5 @@
-import fs from "fs";
-import { v4 as uuidv4 } from "uuid";
+import fs from 'fs';
+import { v4 as uuidv4 } from 'uuid';
 
 class ProductManager {
   constructor(path) {
@@ -8,39 +8,46 @@ class ProductManager {
 
   async createProduct(obj) {
     try {
-        const product = {
-            id: uuidv4(),
-            status: true,
-            ...obj,
-        };
-        const productFile = await this.getProducts();
-        const productExist = productFile.find((u) => u.title === product.title);
-        if (productExist) {
-          console.log("error: el producto ya existe");
-          return "El producto ya existe";
-        }
-        if (product.title === "" || product.description === "" || product.price <= 0 || product.code === "" || product.stock <= 0 || product.category === "" ) {
-            throw new Error("title, description, price, code, stock, category: todos los campos son obligatorios");
-        }
-        productFile.push(product);
-        await fs.promises.writeFile(this.path, JSON.stringify(productFile, null, "\t"));
-        return product;
+      const product = {
+        id: uuidv4(),
+        status: true,
+        ...obj,
+      };
+
+      const productFile = await this.getProducts();
+      const productExist = productFile.find((u) => u.title === product.title);
+      if (productExist) {
+        console.log("error: el producto ya existe");
+        return "El producto ya existe";
+      }
+
+      if (!product.title || !product.description || product.price <= 0 || !product.code || product.stock <= 0 || !product.category) {
+        console.log("error: title, description, price, code, stock, category todos los campos son obligatorios");
+        return null;
+      }
+
+      productFile.push(product);
+      await fs.promises.writeFile(this.path, JSON.stringify(productFile, null, "\t"));
+      return product;
     } catch (error) {
-        console.log(error);
+      console.error(error);
     }
-}
+  }
 
-
-  async getProducts() {
+  async getProducts(limit) {
     try {
       if (fs.existsSync(this.path)) {
-        const products = await fs.promises.readFile(this.path, "utf8");
-        return JSON.parse(products);
+        const products = await fs.promises.readFile(this.path, 'utf8');
+        const parsedProducts = JSON.parse(products);
+        if (limit) {
+          return parsedProducts.slice(0, limit);
+        }
+        return parsedProducts;
       } else {
         return [];
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -51,7 +58,7 @@ class ProductManager {
       if (!productExist) return null;
       return productExist;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -60,13 +67,15 @@ class ProductManager {
       const products = await this.getProducts();
       let productExist = await this.getProductById(id);
       if (!productExist) return null;
+
       productExist = { ...productExist, ...obj };
       const newArray = products.filter((u) => u.id !== id);
       newArray.push(productExist);
+
       await fs.promises.writeFile(this.path, JSON.stringify(newArray, null, "\t"));
       return productExist;
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -84,7 +93,7 @@ class ProductManager {
         return null;
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 
@@ -93,7 +102,7 @@ class ProductManager {
       await fs.promises.unlink(this.path);
       console.log("archivo eliminado");
     } catch (error) {
-      console.log(error);
+      console.error(error);
     }
   }
 }
