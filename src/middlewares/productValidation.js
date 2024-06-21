@@ -1,4 +1,4 @@
-export const productValidator = (req, res, next) => {
+export const productValidation = (req, res, next) => {
     if(
         req.body.title === undefined ||
         req.body.description === undefined ||

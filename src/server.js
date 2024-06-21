@@ -1,56 +1,34 @@
 import express from 'express';
+import { __dirname } from './path.js'; // Asumiendo que `__dirname` está definido en el archivo `path.js`
+import hbs from './handlebarsHbs.js'; // Asumiendo que `hbs` es el motor de plantillas Handlebars configurado en `handlebarsHbs.js`
+
+import viewsRouter from './routes/views.routes.js';
 import cartRouter from './routes/cart.router.js';
 import productsRouter from './routes/products.router.js';
-import morgan from 'morgan';
-import { __dirname } from './path.js';
 import { errorHandler } from './middlewares/errorHandler.js';
-import handlebars from 'express-handlebars';
-import { Server } from 'socket.io';
-import viewsRouter from './routes/views.routes.js';
-import ProductsManager from './managers/product.manager.js';
+import { initMongoDB } from './db/mongoDb.js'; // Importamos la función de inicialización de MongoDB desde el archivo correspondiente
 
-const productManager = new ProductsManager(`${__dirname}/db/products.json`);
 const app = express();
 
-app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan('dev'));
+app.use(express.static(`${__dirname}/public`)); // Middleware para servir archivos estáticos desde la carpeta `public`
 
-app.use('/api/carts', cartRouter);
-app.use('/api/products', productsRouter);
-app.engine('handlebars', handlebars.engine());
-app.set('views', `${__dirname}/views`);
-app.set('view engine', 'handlebars');
+app.use('/api/carts', cartRouter); // Ruta para el manejo de carritos
+app.use('/api/products', productsRouter); // Ruta para el manejo de productos
 
-app.use('/', viewsRouter);
+app.engine('handlebars', hbs.engine); // Configuración del motor de plantillas Handlebars
+app.set('views', `${__dirname}/views`); // Establecer la carpeta de vistas
+app.set('view engine', 'handlebars'); // Establecer el motor de plantillas predeterminado
 
-app.use(errorHandler);
+app.use('/', viewsRouter); // Rutas para las vistas HTML
 
-const PORT = 8080;
+app.use(errorHandler); // Middleware para manejo de errores
 
-const httpServer = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+initMongoDB(); // Inicialización de la conexión a MongoDB
 
-const socketServer = new Server(httpServer);
+const PORT = 8080; // Puerto en el cual se va a ejecutar el servidor
 
-socketServer.on('connection', async (socket) => {
-    console.log(`New client connected - client ID: ${socket.id}`);
-    
-    socket.emit('products', await productManager.getProducts());
-    console.log("Products sent to client");
-
-    socket.on('disconnect', () => console.log(`Client disconnected`));
-
-    socket.on('newProduct', async (newProduct) => {
-        await productManager.createProduct(newProduct);
-        const products = await productManager.getProducts();
-        socketServer.emit('products', products);
-    });
-
-    socket.on('deleteProduct', async (id) => {
-        await productManager.deleteProduct(id);
-        console.log("Product deleted");
-        const products = await productManager.getProducts();
-        socketServer.emit('products', products);
-    });
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
