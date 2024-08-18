@@ -1,11 +1,11 @@
 export const productValidation = (req, res, next) => {
-    if(
-        req.body.title === undefined ||
-        req.body.description === undefined ||
-        req.body.code === undefined ||
-        req.body.price === undefined ||
-        req.body.stock === undefined ||
-        req.body.category === undefined
-    ) res.status(404).json({ msg: 'Invalid body' });
-    else next()
-}
+    !req.body.title ||
+    !req.body.description ||
+    !req.body.code ||
+    !req.body.price ||
+    !req.body.stock ||
+    !req.body.category
+      ? res.status(404).json({ msg: "Invalid product 🚫 missing required properties" })
+      : next();
+  };
+  

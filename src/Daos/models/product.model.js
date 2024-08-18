@@ -10,6 +10,7 @@ const productSchema = new Schema({
         price: { type: Number, required: true },
         stock: { type: Number, required: true },
         category: { type: String, required: true, index: true },
+        img: { type: String, required: false },
     });
 
     productSchema.plugin(mongoosePaginate);
