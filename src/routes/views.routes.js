@@ -32,7 +32,7 @@ router.get("/",  async (req, res, next) => {
       prevLink
     });
   } catch (error) {
-    console.log("error al renderizar ❌");
+    console.log("No se pudo renderizar la página.");
     next(error.message);
   }
 });
@@ -46,7 +46,7 @@ router.get("/product/:pid", async (req, res, next) => {
     }
     res.render("product", { product });
   } catch (error) {
-    console.log("error al obtener el producto ❌");
+    console.log("Error al obtener producto");
     next(error.message);
   }
 });
@@ -58,7 +58,7 @@ router.post("/carts/:cid/product/:pid", async (req, res, next) => {
     const product = await service.addProductToCart(cid,pid) 
     res.render("product", { product });
   } catch (error) {
-    console.log("error al agregar el producto ❌");
+    console.log("Error al agregar producto");
     next(error.message);
   }
 });
@@ -72,7 +72,7 @@ router.get("/carts/:cid", async (req, res, next) => {
     }
     res.render("cart", { cart });
   } catch (error) {
-    console.log("error al obtener el Carrito ❌");
+    console.log("Error al obtener Carrito");
     next(error.message);
   }
 });

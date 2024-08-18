@@ -18,7 +18,7 @@ router.post("/register", async (req, res) => {
   const { first_name, last_name, age, email, role, password } = req.body;
 
   if (!first_name || !last_name || !email || !password || !age) {
-    return res.status(400).json({ error: "Todos los campos son obligatorios" });
+    return res.status(400).json({ error: "Los campos son todos obligatorios" });
   }
 
   try {
@@ -54,7 +54,7 @@ router.post("/login", passport.authenticate("login", {session: false,failureRedi
     const user = req.user;
 
     if (!user) {
-      return res.status(401).json({ error: "Credenciales incorrectas" });
+      return res.status(401).json({ error: "Datos incorrectos" });
     }
 
     const payload = {
@@ -74,11 +74,11 @@ router.post("/login", passport.authenticate("login", {session: false,failureRedi
 );
 
 router.get("/login-error", (req, res) => {
-    res.status(401).json({ error: "Credenciales incorrectas" });
+    res.status(401).json({ error: "Datos incorrectos" });
 });
 
 router.get("/current", passport.authenticate("jwt", { session: false }), roleValidation(['admin','user']),(req, res) => {
-    res.status(200).json({ message: "bienvenido", user: resUserDto(req.user) });
+    res.status(200).json({ message: "Bienvenido", user: resUserDto(req.user) });
   }
 );
 

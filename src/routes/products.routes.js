@@ -7,12 +7,7 @@ import { idValidation } from "../middlewares/idValidation.js";
 import passport from "passport";
 import { roleValidation } from "../middlewares/rolevalidation.js";
 
-
-// instancias
-
 const productRouter = Router();
-
-// rutas para products
 
 productRouter.get("/", productController.getAllProducts);
 

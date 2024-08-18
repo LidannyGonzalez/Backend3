@@ -3,11 +3,7 @@ import * as cartController from "../controllers/cart.controller.js";
 import passport from "passport";
 import { roleValidation } from "../middlewares/rolevalidation.js";
 
-// instancias
-
 const cartRouter = Router();
-
-// rutas para carts
 
 cartRouter.get("/", passport.authenticate("jwt",{session: false}), roleValidation(['admin']), cartController.getAllCarts)
 

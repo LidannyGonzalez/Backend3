@@ -19,7 +19,7 @@ const initializePassport = () => {
         try {
           const user = await userModel.findOne({ email });
           if (!user) {
-            return done(null, false, { message: "No existe el Usuario" });
+            return done(null, false, { message: "Usuario no encontrado" });
           }
 
           if (!comparePassword(password, user.password)) {

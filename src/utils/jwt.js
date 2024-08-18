@@ -6,7 +6,7 @@ const PRIVATE_KEY = process.env.JWT_SECRET;
 
 export function generateToken(payload) {
   return jwt.sign(payload, PRIVATE_KEY, {
-    expiresIn: "15m",
+    expiresIn: "20min",
   });
 }
 
@@ -16,6 +16,6 @@ export function verifyToken(token) {
 
     return decoded;
   } catch (error) {
-    throw new Error("Token no valido");
+    throw new Error("No valido");
   }
 }

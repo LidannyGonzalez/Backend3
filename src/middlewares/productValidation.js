@@ -5,7 +5,7 @@ export const productValidation = (req, res, next) => {
     !req.body.price ||
     !req.body.stock ||
     !req.body.category
-      ? res.status(404).json({ msg: "Invalid product 🚫 missing required properties" })
+      ? res.status(404).json({ msg: "Producto inválido: faltan campos requeridos" })
       : next();
   };
   

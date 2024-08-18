@@ -15,28 +15,25 @@ class MailService {
 
     switch (type) {
       case "welcome":
-        body += `Bienvenido ${name} !
-                
-                Gracias por registrarse en McgX
+        body += `¡Hola ${name}!
+                Te damos la bienvenida a Identidad Digital.
                 `;
         break;
 
       case "purchase":
-        body += `Gracias por tu compra ${name} !
-                
-                Pronto recibiras tu pedido en la dirección indicada.
+        body += `¡Gracias por tu compra, ${name}!
+                Tu pedido está siendo procesado y llegará a la dirección proporcionada.
                 `;
         break;
 
       default:
-        body += `Mensaje a  ${name} !
-                
-                Servicio de Mensajeria de MCGx
+        body += `Hola ${name}!
+                Este es un mensaje de Identidad Digital.
                 `;
         break;
     }
 
-    body += `Saludos! `;
+    body += `¡Saludos!`;
 
     return body;
   }
@@ -45,11 +42,11 @@ class MailService {
     const message = this.getMessageTemplate(type, name);
 
     const info = await this.transporter.sendMail({
-      from: "MattCGX",
+      from: "Identidad Digital",
       to,
       subject,
       html: message,
-      attatchments: [],
+      attachments: [],
     });
     console.log(message);
   }
