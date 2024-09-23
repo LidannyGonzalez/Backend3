@@ -16,6 +16,8 @@ import authRouter from './routes/auth.routes.js';
 
 import { initMongoDB }  from './db/mongoDb.js';
 
+import mocksRouter from './routes/mocks.router.js';
+
 const app = express();
 
 app.use(express.json());
@@ -39,6 +41,8 @@ app.set('view engine', 'handlebars');
 app.use('/', viewsRouter);
 
 app.use(errorHandler);
+
+app.use('/api/mocks', mocksRouter); 
 
 initMongoDB();
 
