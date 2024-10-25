@@ -35,3 +35,27 @@ components:
             type: string
           email:
             type: string
+
+    # Definición de BadRequest
+    BadRequest:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Error en la validación de datos"
+
+    # Definición de InternalServerError
+    InternalServerError:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "Error interno del servidor"
+
+    # Definición de NotFound
+    NotFound:
+      type: object
+      properties:
+        error:
+          type: string
+          example: "No se encontraron usuarios"
