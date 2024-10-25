@@ -1,0 +1,37 @@
+components:
+  schemas:
+    RespuestaRegistro:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Usuario registrado correctamente"
+        user:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "6430a6f4f29e6c22ac5b9a65"
+            first_name:
+              type: string
+              example: "John"
+            last_name:
+              type: string
+              example: "Doe"
+            email:
+              type: string
+              example: "johndoe@example.com"
+    
+    RespuestaGetAll:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          first_name:
+            type: string
+          last_name:
+            type: string
+          email:
+            type: string
