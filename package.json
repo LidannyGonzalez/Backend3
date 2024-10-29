@@ -31,5 +31,11 @@
     "swagger-ui-express": "^5.0.1",
     "uuid": "^9.0.1"
   },
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "chai": "^5.1.2",
+    "faker": "^6.6.6",
+    "mocha": "^10.7.3",
+    "supertest": "^7.0.0"
+  }
 }
